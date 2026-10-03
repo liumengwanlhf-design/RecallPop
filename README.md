@@ -1,10 +1,12 @@
-# AnkiGate · Anki 解锁复习
+# RecallPop · 随时复习一张
 
-一个实验性的 Android AnkiDroid 伴侣：把少量单卡复习放进解锁、持续使用手机和自愿开启的锁屏亮屏时刻。卡片、到期安排、评分、FSRS 和复习历史仍由 AnkiDroid 管理，AnkiGate 不维护另一套卡库或调度器。
+一个实验性的 Android AnkiDroid 伴侣：把少量单卡复习放进解锁、持续使用手机和自愿开启的锁屏亮屏时刻。卡片、到期安排、评分、FSRS 和复习历史仍由 AnkiDroid 管理，RecallPop 不维护另一套卡库或调度器。
 
 当前版本为 **0.6-test**，适合愿意自行检查行为的试用者。它是独立项目，与 Anki / AnkiDroid 官方没有隶属关系。
 
-[下载测试 APK](https://github.com/liumengwanlhf-design/AnkiGate/releases) · [0.6 行为与验证说明](docs/0.6-testing.md)
+[下载测试 APK](https://github.com/liumengwanlhf-design/RecallPop/releases) · [0.6 行为与验证说明](docs/0.6-testing.md)
+
+项目原发布名为 AnkiGate，现更名为 RecallPop。当前 0.6 APK 保持原有内容与签名，安装后的显示名称仍为“Anki 解锁复习”，包名仍为 `dev.ankigate`；更换下载文件名不影响覆盖安装或应用数据。
 
 ## 它会做什么
 
@@ -30,9 +32,9 @@
 
 ### 媒体目录与 AnkiDroid 版本
 
-Android 11 起，系统文件选择器限制其他应用访问 `Android/data`。Google Play 版 AnkiDroid 的媒体若位于其受限应用目录，AnkiGate 无法通过自己的授权按钮解除这项限制。
+Android 11 起，系统文件选择器限制其他应用访问 `Android/data`。Google Play 版 AnkiDroid 的媒体若位于其受限应用目录，RecallPop 无法通过自己的授权按钮解除这项限制。
 
-媒体已经位于共享且可授权的目录时，直接选择其 `collection.media`。若位于受限目录，需要先查阅 [AnkiDroid 官方完整存储访问说明](https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access)，确认当前安装来源、签名与数据位置，并按官方流程处理。官方 GitHub 发布的完整访问安装包标为 `full-universal.apk`；其他来源或 Parallel 版本的安装与数据位置可能不同，不能假定都可直接覆盖。正常配置 AnkiGate 不需要开发者调试命令。
+媒体已经位于共享且可授权的目录时，直接选择其 `collection.media`。若位于受限目录，需要先查阅 [AnkiDroid 官方完整存储访问说明](https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access)，确认当前安装来源、签名与数据位置，并按官方流程处理。官方 GitHub 发布的完整访问安装包标为 `full-universal.apk`；其他来源或 Parallel 版本的安装与数据位置可能不同，不能假定都可直接覆盖。正常配置 RecallPop 不需要开发者调试命令。
 
 更换 AnkiDroid 版本或调整集合位置前，先在 AnkiDroid 完成备份与同步，按官方说明操作并确认卡片及媒体完整。不要仅为本应用直接移动、覆盖或重新导入原集合，也不要把备份包当作媒体目录选择。
 

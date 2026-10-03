@@ -1,6 +1,6 @@
 # Third-party notices
 
-The root MIT license covers original AnkiGate code and documentation. It does not replace the following licenses.
+The root MIT license covers original RecallPop code and documentation. It does not replace the following licenses.
 
 ## Gradle wrapper
 
@@ -19,4 +19,4 @@ Both retain their original Apache License 2.0 headers. See [the included license
 
 ## AnkiDroid API
 
-AnkiGate communicates with the installed AnkiDroid content provider using independently written code. No AnkiDroid implementation or collection is included. `tests/check-anki-contract.mjs` accepts a separately obtained official contract file; that external file remains under its upstream license.
+RecallPop communicates with the installed AnkiDroid content provider using independently written code. No AnkiDroid implementation or collection is included. `tests/check-anki-contract.mjs` accepts a separately obtained official contract file; that external file remains under its upstream license.
