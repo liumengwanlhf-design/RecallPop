@@ -1,0 +1,33 @@
+# Local Android / Gradle state
+.gradle/
+.kotlin/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Signing material and machine-only configuration
+*.jks
+*.keystore
+*.p12
+*.pfx
+key.properties
+keystore.properties
+.env
+.env.*
+
+# Generated packages, private Anki collections / media, and diagnostics
+*.apk
+*.aab
+*.apkg
+*.colpkg
+*.anki2
+*.anki21
+collection.media/
+*.log
+*.hprof
+
+# Gradle wrapper is intentionally versioned
+!gradle/wrapper/gradle-wrapper.jar
