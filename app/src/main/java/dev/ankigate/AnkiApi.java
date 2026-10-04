@@ -63,6 +63,6 @@ final class AnkiApi {
    provider.update(Uri.withAppendedPath(BASE,"schedule"),v,null,null);
   }
   if(reps(card)!=card.reps+1)throw new IllegalStateException("提交结果未确认；不再重试，请在AnkiDroid检查卡片历史");
-  ReviewStats.confirmed(context);android.util.Log.d("AnkiGateApi","answer confirmed repsDelta=1 ease="+ease+" elapsedMs="+elapsed);
+  ReviewStats.confirmed(context,ease);android.util.Log.d("AnkiGateApi","answer confirmed repsDelta=1 ease="+ease+" elapsedMs="+elapsed);
  }
 }

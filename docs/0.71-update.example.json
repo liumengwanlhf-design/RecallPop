@@ -1,0 +1,8 @@
+{
+  "versionCode": 8,
+  "versionName": "0.71-test",
+  "apkUrl": "https://pop.382910.xyz/releases/AnkiBiliGate-0.71-test.apk",
+  "sha256": "f0783ee2814458e14fe25d8dcd01f823171533fec9577b907ca6d16c1e8c28d8",
+  "size": 2764151,
+  "notes": "增加独立实时运行状态、有限近期诊断和系统允许的开机/更新后恢复；预计时间是下一次检查，后台及OEM恢复仍需实际试用。保留原牌组、媒体、评分门槛与保护。"
+}
