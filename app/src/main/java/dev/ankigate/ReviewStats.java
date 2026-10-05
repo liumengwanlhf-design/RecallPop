@@ -13,7 +13,7 @@ final class ReviewStats {
  static synchronized void confirmed(Context context,int ease){
   SharedPreferences p=context.getSharedPreferences("gate",0);String day=LocalDate.now().toString();
   int count=day.equals(p.getString("complete_day",""))?p.getInt("complete_count",0):0;
-  SharedPreferences.Editor edit=p.edit().putString("complete_day",day).putInt("complete_count",count+1).putLong("protected_until",Math.max(p.getLong("protected_until",0),System.currentTimeMillis()+GatePolicy.PROTECTION_MS));
+  SharedPreferences.Editor edit=p.edit().putString("complete_day",day).putInt("complete_count",count+1);
   if(QualifiedPolicy.accepts(p.getInt("qualified_threshold",3),ease)){int q=day.equals(p.getString("qualified_day",""))?p.getInt("qualified_count",0):0;edit.putString("qualified_day",day).putInt("qualified_count",q+1);}
   edit.apply();
  }

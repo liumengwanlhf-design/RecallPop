@@ -14,9 +14,11 @@ public final class ReviewStatsChecks {
   if(ReviewStats.today(c)!=0)throw new AssertionError("no backfill");
   p.values.put("complete_day","2000-01-01");p.values.put("complete_count",100);
   if(ReviewStats.qualifiedToday(c)!=0)throw new AssertionError("old completions cannot backfill qualified");
+  p.values.put("protected_until",7L);
   Thread a=new Thread(()->{for(int i=0;i<1000;i++)ReviewStats.confirmed(c,3);});Thread b=new Thread(()->{for(int i=0;i<1000;i++)ReviewStats.confirmed(c,2);});a.start();b.start();a.join();b.join();
   if(ReviewStats.today(c)!=2000)throw new AssertionError("concurrent confirmations lost or old day backfilled");
   if(ReviewStats.qualifiedToday(c)!=1000)throw new AssertionError("default requires good or easy");
+  if(p.getLong("protected_until",0)!=7L)throw new AssertionError("a card completion starts protection inside a batch");
   p.values.put("qualified_threshold",4);ReviewStats.confirmed(c,3);ReviewStats.confirmed(c,4);if(ReviewStats.qualifiedToday(c)!=1001)throw new AssertionError("easy-only threshold");
   p.values.put("qualified_threshold",1);ReviewStats.confirmed(c,1);if(ReviewStats.qualifiedToday(c)!=1002)throw new AssertionError("all threshold");
   p.values.put("qualified_day","2000-01-01");ReviewStats.confirmed(c,4);if(ReviewStats.qualifiedToday(c)!=1)throw new AssertionError("qualified midnight reset");

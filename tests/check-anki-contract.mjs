@@ -12,4 +12,5 @@ const projected=['NOTE_ID','CARD_ORD','BUTTON_COUNT','MEDIA_FILES','QUESTION','A
 for(const field of projected)assert(api.includes(`"${fields.get(field)}"`),`Missing official ${field} value`);
 assert(api.includes(`v.put("${fields.get('EASE')}",ease)`),'Ease must use the official write-only field');
 assert(!api.includes('"card_ord"')&&!api.includes('"ease"'),'Unsupported legacy guesses');
+assert(official.includes('Uri.withAppendedPath(AUTHORITY_URI, "selected_deck")')&&api.includes('Uri.withAppendedPath(BASE,"selected_deck")'),'Selected deck URI follows the official contract');
 console.log('Official v2.24.0 projection and submission fields verified');

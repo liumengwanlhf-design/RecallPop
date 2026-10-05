@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.os.*;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
-/** Internal, already-prepared single card. Never unlocks or requests another card. */
+/** A finite lockscreen round. The same Activity and touch state serve every card. */
 public final class WakeReviewActivity extends Activity {
  GateService owner;GateService.PendingWake review;ReviewPane pane;
  long token;boolean visible,shown,touched;long opened;
@@ -16,8 +17,13 @@ public final class WakeReviewActivity extends Activity {
   super.onCreate(state);owner=GateService.instance;token=getIntent().getLongExtra("token",-1);
   if(owner==null||(review=owner.claimWake(token,this))==null){finish();return;}
   setShowWhenLocked(true);setTurnScreenOn(true);opened=SystemClock.elapsedRealtime();
-  pane=new ReviewPane(this,review.card,review.media,owner.worker,()->{android.util.Log.d("AnkiGateActivity","wake answer confirmed; finish");finish();},owner::stopAll);
-  pane.message.setText("保留系统锁；未触摸最多暂亮屏30秒，触摸后由系统管理。");setContentView(pane);
+  showNext();pane.message.setText("保留系统锁；未触摸最多暂亮屏30秒，触摸后由系统管理。");
+ }
+ void showNext(){pane=new ReviewPane(this,review.card,review.media,owner.worker,review.batch,this::scoreConfirmed,this::finish,owner::stopAll);setContentView(pane);}
+ void scoreConfirmed(){
+  if(review.batch.ended)return;boolean more=review.batch.confirmed();if(!more||!canSubmit()){finish();return;}
+  ReviewPane old=pane;pane=null;LinearLayout root=ShellUi.column(this);ShellUi.safeInsets(root);root.addView(ShellUi.title(this,"本轮 "+review.batch.position()));root.addView(ShellUi.text(this,"正在读取下一张；系统锁仍保留。",18));root.addView(ShellUi.button(this,"结束本轮",v->finish()));root.addView(ShellUi.button(this,"停止全部介入",v->owner.stopAll()));setContentView(root);
+  old.dispose(()->{if(review.batch.ended||isFinishing())return;if(canSubmit())owner.readNextAutomatic(review.batch,true,review.debug);else finish();});
  }
  @Override protected void onResume(){super.onResume();visible=true;confirmVisible();}
  @Override public void onWindowFocusChanged(boolean focus){super.onWindowFocusChanged(focus);if(focus)confirmVisible();}
@@ -34,7 +40,7 @@ public final class WakeReviewActivity extends Activity {
   return super.dispatchTouchEvent(event);
  }
  boolean canSubmit(){return visible&&shown&&!isFinishing()&&hasWindowFocus()&&owner!=null&&owner.enabled()&&owner.wakeMode()&&owner.pendingWake==review&&((PowerManager)getSystemService(POWER_SERVICE)).isInteractive();}
- @Override protected void onPause(){visible=false;clearInitialScreenHold();super.onPause();}
+ @Override protected void onPause(){visible=false;clearInitialScreenHold();if(owner!=null&&owner.fetchRequest!=null&&owner.fetchIsWake)owner.fetchRequest.cancel("锁屏卡页面已离开");super.onPause();}
  @Override protected void onStop(){
   clearInitialScreenHold();main.removeCallbacksAndMessages(null);if(pane!=null){pane.dispose();pane=null;}
   if(owner!=null)owner.wakeEnded(token);if(!isFinishing())finish();super.onStop();
